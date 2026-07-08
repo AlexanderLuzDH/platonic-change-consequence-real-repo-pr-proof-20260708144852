@@ -318,3 +318,6 @@ def join_options(options: cabc.Iterable[str]) -> tuple[str, bool]:
 
     rv.sort(key=lambda x: x[0])
     return ", ".join(x[1] for x in rv), any_prefix_is_slash
+# Consequence-certificate proof marker for a real codebase snapshot.
+PLATONIC_REAL_REPO_PROOF = 43
+
