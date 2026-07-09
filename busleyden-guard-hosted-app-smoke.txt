@@ -1,0 +1,2 @@
+Busleyden Guard hosted GitHub App webhook smoke test.
+Triggered after installation and live webhook configuration.
