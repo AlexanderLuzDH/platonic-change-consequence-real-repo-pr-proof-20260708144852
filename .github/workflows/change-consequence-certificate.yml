@@ -175,6 +175,7 @@ jobs:
             printf '%s\n' '<!-- busleyden-guard -->' | cat - change-consequence.md > change-consequence.tmp
             mv change-consequence.tmp change-consequence.md
           fi
+          printf '\n---\nWas this decision useful? React to this comment with +1 or -1.\n' >> change-consequence.md
           comment_id=$(gh api "repos/$GITHUB_REPOSITORY/issues/$PR_NUMBER/comments" \
             --jq '.[] | select(.body | contains("<!-- busleyden-guard -->")) | .id' | head -n 1)
           jq -Rs '{body: .}' change-consequence.md > comment-request.json
