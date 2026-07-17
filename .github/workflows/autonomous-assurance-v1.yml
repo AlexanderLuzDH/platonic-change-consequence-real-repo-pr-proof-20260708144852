@@ -1,0 +1,95 @@
+name: autonomous-assurance-lab-v1
+
+on:
+  push:
+    branches:
+      - agent/autonomous-assurance-lab-v1
+    paths:
+      - ".github/workflows/autonomous-assurance-v1.yml"
+      - "experiments/autonomous-assurance-v1/**"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  static-corpus:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - name: Clone BugsInPy outcome corpus
+        run: git clone --depth 1 https://github.com/soarsmu/BugsInPy.git /tmp/BugsInPy
+      - name: Run laboratory unit tests
+        run: python -m unittest discover -s experiments/autonomous-assurance-v1/tests -v
+      - name: Run full static history analysis
+        run: |
+          mkdir -p results/static
+          python experiments/autonomous-assurance-v1/analyze_bugsinpy.py /tmp/BugsInPy \
+            --json-output results/static/bugsinpy-static.json \
+            --markdown-output results/static/bugsinpy-static.md \
+            --csv-output results/static/bugsinpy-cases.csv
+          cp experiments/autonomous-assurance-v1/PREREGISTRATION.md results/static/
+          git -C /tmp/BugsInPy rev-parse HEAD > results/static/bugsinpy-commit.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: autonomous-assurance-v1-static
+          retention-days: 90
+          if-no-files-found: error
+          path: results/static
+
+  executable-primary:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.8"
+      - name: Run PySnooper history-grounded counterfactuals
+        run: |
+          mkdir -p results/executable-primary
+          python experiments/autonomous-assurance-v1/run_pysnooper_cases.py \
+            --python python \
+            --json-output results/executable-primary/pysnooper-executable.json \
+            --markdown-output results/executable-primary/pysnooper-executable.md
+          python --version > results/executable-primary/python-version.txt
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: autonomous-assurance-v1-executable-python38
+          retention-days: 90
+          if-no-files-found: error
+          path: results/executable-primary
+
+  executable-transfer:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Run transfer environment without gating the primary workflow
+        shell: bash
+        run: |
+          mkdir -p results/executable-transfer
+          set +e
+          python experiments/autonomous-assurance-v1/run_pysnooper_cases.py \
+            --python python \
+            --json-output results/executable-transfer/pysnooper-executable.json \
+            --markdown-output results/executable-transfer/pysnooper-executable.md
+          status=$?
+          printf '%s\n' "$status" > results/executable-transfer/experiment-exit-status.txt
+          python --version > results/executable-transfer/python-version.txt
+          exit 0
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: autonomous-assurance-v1-executable-python311-transfer
+          retention-days: 90
+          if-no-files-found: error
+          path: results/executable-transfer
