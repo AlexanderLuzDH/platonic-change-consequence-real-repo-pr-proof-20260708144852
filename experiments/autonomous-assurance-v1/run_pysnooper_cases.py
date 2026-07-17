@@ -16,6 +16,7 @@ import argparse
 import hashlib
 import json
 import os
+import shutil
 import subprocess
 import tempfile
 from dataclasses import dataclass, asdict
@@ -146,8 +147,13 @@ def write_test(repo: Path, case: Case) -> Path:
 
 
 def execute_test(repo: Path, python: str) -> dict[str, object]:
-    env = {"PYTHONPATH": str(repo), "PYTHONUTF8": "1"}
-    result = run([python, "autonomous_assurance_regression.py"], cwd=repo, env=env)
+    # Same-size, same-second mutations can otherwise reuse stale CPython bytecode.
+    for cache in repo.rglob("__pycache__"):
+        shutil.rmtree(cache, ignore_errors=True)
+    for bytecode in repo.rglob("*.pyc"):
+        bytecode.unlink(missing_ok=True)
+    env = {"PYTHONPATH": str(repo), "PYTHONUTF8": "1", "PYTHONDONTWRITEBYTECODE": "1"}
+    result = run([python, "-B", "autonomous_assurance_regression.py"], cwd=repo, env=env)
     return {
         "passed": result.returncode == 0,
         "returncode": result.returncode,
@@ -268,7 +274,7 @@ def main() -> int:
 
     results = [execute_case(case, parent=parent, python=args.python) for case in CASES]
     payload = {
-        "schema_version": 1,
+        "schema_version": 2,
         "kind": "autonomous_assurance_pysnooper_executable_result",
         "claim_boundary": (
             "These are compact executable reproductions derived from three BugsInPy PySnooper cases. "
@@ -276,6 +282,7 @@ def main() -> int:
             "they are not full-suite reproductions of the entire upstream projects."
         ),
         "python": args.python,
+        "harness_controls": ["purge __pycache__ and .pyc before each execution", "run Python with -B and PYTHONDONTWRITEBYTECODE=1"],
         "results": results,
         "summary": {
             "cases": len(results),
