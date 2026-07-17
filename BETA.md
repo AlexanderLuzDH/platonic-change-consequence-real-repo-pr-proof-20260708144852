@@ -1,6 +1,6 @@
 # Busleyden Guard prospective public beta
 
-The paid launch is closed. This beta exists to determine whether Guard genuinely improves real pull-request review decisions before anyone is asked to pay.
+The paid launch is closed. This beta exists to determine whether Guard genuinely improves real pull-request review decisions before anyone is asked to pay. The protocol is not active until a separate `ACTIVATION.json` commit freezes the engine, policy, key commitments, activation time, and enrolled repositories before the first assignment.
 
 The former retrospective `Useful / Noisy / Missed something` log is not sufficient to estimate actionable precision, missed-risk recall, or causal decision changes. The beta now uses a preregistered prospective trial with concealed assignment and blinded probability audits.
 
@@ -8,7 +8,7 @@ The former retrospective `Useful / Noisy / Missed something` log is not sufficie
 
 Maintainers of public Python repositories can participate without a card, contract, call, or meeting.
 
-1. Read the [prospective trial preregistration](experiments/prospective-beta-v1/PREREGISTRATION.md).
+1. Read the [prospective trial preregistration](experiments/prospective-beta-v1/PREREGISTRATION.md) and confirm that an active `ACTIVATION.json` exists.
 2. [Open an enrollment issue](https://github.com/AlexanderLuzDH/busleyden-guard-live-proof/issues/new?template=beta.yml) before the first eligible PR.
 3. Freeze repository-specific eligibility and dependency-PR policy.
 4. Install or run Guard in non-blocking experimental mode.
@@ -81,7 +81,7 @@ Meeting the gate permits consideration of a paid launch. It does not prove that 
 
 ## Public records
 
-Machine records follow the [versioned trial schema](experiments/prospective-beta-v1/trial-record.schema.json) and are checked by the [trial validator](experiments/prospective-beta-v1/validate.py). Do not place private code, secrets, personal information, or undisclosed vulnerability details in records or issues.
+Machine records follow the [versioned trial schema](experiments/prospective-beta-v1/trial-record.schema.json), are checked by the [trial validator](experiments/prospective-beta-v1/validate.py), and are analyzed with inverse-probability weights because alert and no-alert PRs have different audit probabilities. Do not place private code, secrets, personal information, or undisclosed vulnerability details in records or issues.
 
 ## Current evidence
 

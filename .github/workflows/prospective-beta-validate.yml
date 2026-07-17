@@ -1,0 +1,55 @@
+name: prospective-beta-protocol
+
+on:
+  pull_request:
+    paths:
+      - "BETA.md"
+      - "README.md"
+      - ".github/ISSUE_TEMPLATE/beta.yml"
+      - ".github/workflows/prospective-beta-validate.yml"
+      - "experiments/prospective-beta-v1/**"
+  push:
+    branches: [main]
+    paths:
+      - "BETA.md"
+      - "README.md"
+      - ".github/ISSUE_TEMPLATE/beta.yml"
+      - ".github/workflows/prospective-beta-validate.yml"
+      - "experiments/prospective-beta-v1/**"
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    strategy:
+      matrix:
+        python-version: ["3.11", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Compile trial tools
+        run: python -m compileall -q experiments/prospective-beta-v1
+      - name: Run protocol tests
+        run: python -m unittest discover -s experiments/prospective-beta-v1/tests -v
+      - name: Validate conformance fixture and public records
+        run: |
+          python experiments/prospective-beta-v1/validate.py \
+            experiments/prospective-beta-v1/fixtures/valid-record.json
+          python experiments/prospective-beta-v1/validate.py \
+            experiments/prospective-beta-v1/records
+      - name: Verify blinded packet and analysis paths
+        run: |
+          python experiments/prospective-beta-v1/make_audit_packet.py \
+            experiments/prospective-beta-v1/fixtures/valid-record.json \
+            --output /tmp/audit-packet.json
+          python experiments/prospective-beta-v1/analyze.py \
+            experiments/prospective-beta-v1/fixtures \
+            --json-output /tmp/beta-analysis.json \
+            --markdown-output /tmp/beta-analysis.md
+      - name: Verify frozen protocol manifest
+        run: python experiments/prospective-beta-v1/verify_protocol_manifest.py

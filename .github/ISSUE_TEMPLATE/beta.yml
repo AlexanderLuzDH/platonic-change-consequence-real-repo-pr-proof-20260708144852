@@ -13,7 +13,7 @@ body:
       value: |
         Thanks for pressure-testing Guard. This issue records enrollment before any eligible pull request is assigned.
 
-        The trial compares delayed control, evidence-only, immediate obligations, and baseline-then-Guard presentation. It also audits a concealed probability sample of alert and no-alert PRs. Read the [preregistration](https://github.com/AlexanderLuzDH/busleyden-guard-live-proof/blob/main/experiments/prospective-beta-v1/PREREGISTRATION.md) before enrolling.
+        The trial compares delayed control, evidence-only, immediate obligations, and baseline-then-Guard presentation. It also audits a concealed probability sample of alert and no-alert PRs. Read the [preregistration](../../experiments/prospective-beta-v1/PREREGISTRATION.md) before enrolling.
 
         Do not include secrets, private code, personal information, or undisclosed vulnerability details.
 
@@ -60,6 +60,8 @@ body:
     attributes:
       label: Prospective trial agreement
       options:
+        - label: I have confirmed that the repository is listed in the active trial commitment and that enrollment occurs before any eligible PR is assigned.
+          required: true
         - label: I agree that every future eligible PR will enter the ledger in creation order, including control assignments, failures, missing feedback, and withdrawals.
           required: true
         - label: I agree to concealed randomized presentation and understand that normal CI and human review continue in every arm.

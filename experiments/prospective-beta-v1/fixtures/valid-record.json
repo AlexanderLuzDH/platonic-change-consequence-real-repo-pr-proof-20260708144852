@@ -1,0 +1,153 @@
+{
+  "adjudication": {
+    "adjudicator_ids": [
+      "adjudicator-a",
+      "adjudicator-b"
+    ],
+    "material_risks": [
+      {
+        "description": "The PR must demonstrate that reused tokens are rejected.",
+        "mapped_obligation_ids": [
+          "verify-auth-replay-test"
+        ],
+        "material": true,
+        "risk_id": "risk-token-replay"
+      }
+    ],
+    "obligation_labels": [
+      {
+        "label": "actionable_new",
+        "obligation_id": "verify-auth-replay-test",
+        "rationale": "The baseline noticed replay risk but had not identified executable evidence needed to resolve it."
+      }
+    ],
+    "recommended_decision": "request_changes",
+    "stage1_completed_at": "2026-07-17T00:30:00Z",
+    "stage2_completed_at": "2026-07-17T00:40:00Z"
+  },
+  "assignment": {
+    "arm": "baseline_then_guard",
+    "assigned_at": "2026-07-17T00:03:00Z",
+    "assignment_digest": "7035ce3d03f7032a6d11b6e02fdb0fcd08899622b6c0dd0027a701dd57ac4a00",
+    "block_index": 10,
+    "position_in_block": 4
+  },
+  "audit_selection": {
+    "primary_selected": true,
+    "probability": 0.25,
+    "safety_audit": false,
+    "selected_at": "2026-07-17T00:05:00Z",
+    "selection_digest": "019ad676a5b3285ef8bc53c84b1c36f6d22d3c4bf5469393b275f4c92133f766"
+  },
+  "baseline": {
+    "confidence": 70,
+    "decision": "approve",
+    "evidence_already_seen": [
+      "Owner review is present."
+    ],
+    "recorded_at": "2026-07-17T00:06:00Z",
+    "risks": [
+      "Token replay handling may be incomplete."
+    ]
+  },
+  "eligibility": {
+    "determined_at": "2026-07-17T00:02:00Z",
+    "eligible": true,
+    "reason": "Opened after activation; public Python PR with tracked source changes."
+  },
+  "enrollment": {
+    "activated_at": "2026-07-17T00:00:00Z",
+    "assignment_key_commitment": "3626ac2e476a43b68ce0967bb87ccd672411a79a7efab6c3c2a04ba9da7ff4e3",
+    "audit_key_commitment": "e71366255921ce60011b25eb85b8903241cb26c75e3c6dbf10230ca418e4d42b",
+    "dependency_pr_policy": "exclude",
+    "issue_url": "https://github.com/AlexanderLuzDH/busleyden-guard-live-proof/issues/99"
+  },
+  "exposure": {
+    "components_shown": [
+      "evidence_states",
+      "obligations"
+    ],
+    "delayed_until_outcome": false,
+    "occurred_at": "2026-07-17T00:07:00Z"
+  },
+  "feedback": {
+    "comment": "The evidence distinction changed the requested review action.",
+    "subjective_label": "useful"
+  },
+  "guard": {
+    "alerted": true,
+    "engine_id": "3333333333333333333333333333333333333333333333333333333333333333",
+    "evidence_states": [
+      {
+        "artifact_refs": [
+          "tests/test_auth.py::test_replayed_token_is_rejected"
+        ],
+        "claim": "A regression test demonstrates that a used token is rejected.",
+        "evidence_id": "auth-replay-test",
+        "state": "present_unverified"
+      },
+      {
+        "artifact_refs": [
+          "https://github.com/example-org/example-python/pull/123#pullrequestreview-1"
+        ],
+        "claim": "The authentication owner reviewed the change.",
+        "evidence_id": "owner-review",
+        "state": "present_verified"
+      }
+    ],
+    "execution_status": "success",
+    "failure_reason": null,
+    "generated_at": "2026-07-17T00:04:00Z",
+    "obligations": [
+      {
+        "claim": "Execute or causally validate the replay regression test.",
+        "evidence_id": "auth-replay-test",
+        "obligation_id": "verify-auth-replay-test"
+      }
+    ],
+    "output_digest": "5555555555555555555555555555555555555555555555555555555555555555",
+    "policy_id": "4444444444444444444444444444444444444444444444444444444444444444"
+  },
+  "intention_to_treat": true,
+  "pr": {
+    "audit_snapshot_digest": "9999999999999999999999999999999999999999999999999999999999999999",
+    "audit_snapshot_refs": [
+      "https://github.com/example-org/example-python/compare/1111111111111111111111111111111111111111...2222222222222222222222222222222222222222.diff"
+    ],
+    "base_sha": "1111111111111111111111111111111111111111",
+    "changed_files": [
+      "src/auth.py",
+      "tests/test_auth.py"
+    ],
+    "eligible_index": 85,
+    "head_sha": "2222222222222222222222222222222222222222",
+    "number": 123,
+    "opened_at": "2026-07-17T00:01:00Z",
+    "prior_guard_exposures": 42,
+    "url": "https://github.com/example-org/example-python/pull/123"
+  },
+  "provenance": {
+    "created_at": "2026-07-17T00:03:00Z",
+    "record_digest": "42c3cbb231cc85b480032ca6b8fdfb8f56f36eeea85c5fc05676a37db807ee55",
+    "updated_at": "2026-07-17T00:40:00Z"
+  },
+  "record_id": "example-org__example-python__85__pr-123",
+  "record_status": "complete",
+  "repository": "example-org/example-python",
+  "reviewer_outcome": {
+    "confidence": 90,
+    "decision": "request_changes",
+    "recorded_at": "2026-07-17T00:20:00Z",
+    "review_time_minutes": 18.0
+  },
+  "schema_version": "1.0",
+  "status": {
+    "missing_outcome": false,
+    "safety_override": false,
+    "safety_override_at": null,
+    "safety_override_reason": null,
+    "technical_failure": false,
+    "withdrawn": false
+  },
+  "trial_id": "busleyden-prospective-beta-v1"
+}

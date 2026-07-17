@@ -57,7 +57,7 @@ The prospective beta randomizes future eligible PRs across delayed control, evid
 - risks Guard missed;
 - corrections and regressions in real review decisions.
 
-The executable assignment, audit, validation, and analysis tools live in [`experiments/prospective-beta-v1`](experiments/prospective-beta-v1).
+The executable assignment, audit, validation, and inverse-probability analysis tools live in [`experiments/prospective-beta-v1`](experiments/prospective-beta-v1). Merging the protocol does not activate the experiment; activation requires a later public commitment file before the first assignment.
 
 ## Run it as a GitHub Action
 

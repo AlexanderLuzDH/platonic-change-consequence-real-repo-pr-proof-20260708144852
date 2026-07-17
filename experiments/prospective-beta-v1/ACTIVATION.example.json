@@ -1,0 +1,13 @@
+{
+  "schema_version": "1.0",
+  "trial_id": "busleyden-prospective-beta-v1",
+  "status": "inactive_example",
+  "activation_commit": "REPLACE_WITH_MERGED_COMMIT_SHA",
+  "activated_at": "REPLACE_WITH_UTC_TIMESTAMP",
+  "assignment_key_commitment": "REPLACE_WITH_SHA256_HEX",
+  "audit_key_commitment": "REPLACE_WITH_SHA256_HEX",
+  "guard_engine_id": "REPLACE_WITH_SHA256_HEX",
+  "guard_policy_id": "REPLACE_WITH_SHA256_HEX",
+  "eligible_repositories": [],
+  "note": "The trial is not active until ACTIVATION.json is committed with real commitments before the first eligible PR assignment. Never commit the secret keys."
+}

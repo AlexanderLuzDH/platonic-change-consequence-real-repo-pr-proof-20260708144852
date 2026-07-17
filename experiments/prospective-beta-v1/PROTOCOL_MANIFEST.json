@@ -1,0 +1,82 @@
+{
+  "activation_required": true,
+  "claim_boundary": "This manifest freezes protocol code and public enrollment surfaces. It does not activate the trial or contain secret keys.",
+  "files": [
+    {
+      "path": "README.md",
+      "sha256": "c497f040e3b4434b112c3ee0215124e9ae537a5781a0f2400389fc49bb602575"
+    },
+    {
+      "path": "BETA.md",
+      "sha256": "b5d6a40f24d0e26c689b36748b20b0b52724ea5697864a2f650731c8a8e17a25"
+    },
+    {
+      "path": ".github/ISSUE_TEMPLATE/beta.yml",
+      "sha256": "3b894bbc8efdd5eaadde3d2e2526035c5a9290dabc323df61f24b109aed6d6d0"
+    },
+    {
+      "path": ".github/workflows/prospective-beta-validate.yml",
+      "sha256": "f59325b84dfffae8a59b7ad2ef720682cc3e67e9a2617ba712a62c07931e10d5"
+    },
+    {
+      "path": "experiments/prospective-beta-v1/PREREGISTRATION.md",
+      "sha256": "ad9eda4b18a224e5f8b109ffa1cc52b6d3d4f6a330011f787c6fb194c2dbd62a"
+    },
+    {
+      "path": "experiments/prospective-beta-v1/README.md",
+      "sha256": "cd4487644a5cf558c2d89e26757dd481450f16412ef9ec9f460f74d1196aed4f"
+    },
+    {
+      "path": "experiments/prospective-beta-v1/trial-record.schema.json",
+      "sha256": "53113dbd506f960059ad8f55c782401fca4f8e3072e177c3bf684c387327ee80"
+    },
+    {
+      "path": "experiments/prospective-beta-v1/trial_tools.py",
+      "sha256": "cd7e5d5b42ce906e875c36ebdbd4c1a30665ece341119fc67fb37952bff5a9f0"
+    },
+    {
+      "path": "experiments/prospective-beta-v1/randomize.py",
+      "sha256": "9b47374712ca8b5104acbfed90ca35bb07aca47362bc1ebb6f922d5e28aa8817"
+    },
+    {
+      "path": "experiments/prospective-beta-v1/select_audit.py",
+      "sha256": "7ecd11b920a07b81c6a995d99d3cf2860ccc2c689d9c216b28b4dfa394b939cc"
+    },
+    {
+      "path": "experiments/prospective-beta-v1/validate.py",
+      "sha256": "1c36eabd57a8702eebb2217442002e416fb7d353bc9b86544ecf5bfc16704ef3"
+    },
+    {
+      "path": "experiments/prospective-beta-v1/make_audit_packet.py",
+      "sha256": "7e80cd2ab5fc4bceaa8cd300377ae60174df80a02e5012d36b858a7b8555918a"
+    },
+    {
+      "path": "experiments/prospective-beta-v1/analyze.py",
+      "sha256": "5546432e303b766227f4c44a940222d4fe9e3f372b91a12cf46a69d4fd2d131f"
+    },
+    {
+      "path": "experiments/prospective-beta-v1/verify_protocol_manifest.py",
+      "sha256": "92854c89af4de1eff5b186bd5f55e7ea2048a8029c60f4117b7c4143b07544e7"
+    },
+    {
+      "path": "experiments/prospective-beta-v1/tests/test_trial_tools.py",
+      "sha256": "7faa28c7e43f90027d4bbc54e11bab8498bac42089609263e657e28456e2d9cc"
+    },
+    {
+      "path": "experiments/prospective-beta-v1/fixtures/valid-record.json",
+      "sha256": "3da38e642b90b0e2e15e80d9d74231a19e2413a477eef7466046424ee44cb22f"
+    },
+    {
+      "path": "experiments/prospective-beta-v1/ACTIVATION.example.json",
+      "sha256": "e85f24f45d1a676c50abc75b201772692b500c9dabbb778fcf03068576c357c1"
+    }
+  ],
+  "manifest_schema_version": "1.0",
+  "mutable_paths_excluded": [
+    "experiments/prospective-beta-v1/AMENDMENTS.md",
+    "experiments/prospective-beta-v1/records/**",
+    "experiments/prospective-beta-v1/ACTIVATION.json"
+  ],
+  "protocol_version": "1.0",
+  "trial_id": "busleyden-prospective-beta-v1"
+}
