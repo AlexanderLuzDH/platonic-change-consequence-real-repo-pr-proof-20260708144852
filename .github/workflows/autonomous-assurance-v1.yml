@@ -140,3 +140,30 @@ jobs:
           retention-days: 90
           if-no-files-found: error
           path: results/dynamic-mapping
+
+  httpie-transfer-primary:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.8"
+      - name: Install HTTPie runtime dependencies
+        run: python -m pip install --disable-pip-version-check requests==2.31.0 Pygments==2.17.2
+      - name: Run preregistered HTTPie causal and mapping transfer
+        run: |
+          mkdir -p results/httpie-transfer
+          python experiments/autonomous-assurance-v1/run_httpie_transfer.py \
+            --python python \
+            --json-output results/httpie-transfer/httpie-transfer.json \
+            --markdown-output results/httpie-transfer/httpie-transfer.md
+          cp experiments/autonomous-assurance-v1/HTTPIE-TRANSFER-PREREGISTRATION.md results/httpie-transfer/
+          python --version > results/httpie-transfer/python-version.txt
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: autonomous-assurance-v1-httpie-transfer-python38
+          retention-days: 90
+          if-no-files-found: error
+          path: results/httpie-transfer
