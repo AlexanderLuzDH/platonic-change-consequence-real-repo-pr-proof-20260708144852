@@ -1,13 +1,22 @@
-name: Enroll in the free Guard beta
-description: Evaluate Busleyden Guard on a public Python repository without a card, call, or automatic conversion.
-title: "Beta: "
+name: Enroll in the prospective Guard beta
+
+description: Evaluate Busleyden Guard in a preregistered randomized trial on future public Python pull requests.
+
+title: "Prospective beta: "
+
 labels:
   - beta
+
 body:
   - type: markdown
     attributes:
       value: |
-        Thanks for pressure-testing Guard. This issue is the public evaluation record. Do not include secrets, private code, or undisclosed vulnerability details.
+        Thanks for pressure-testing Guard. This issue records enrollment before any eligible pull request is assigned.
+
+        The trial compares delayed control, evidence-only, immediate obligations, and baseline-then-Guard presentation. It also audits a concealed probability sample of alert and no-alert PRs. Read the [preregistration](https://github.com/AlexanderLuzDH/busleyden-guard-live-proof/blob/main/experiments/prospective-beta-v1/PREREGISTRATION.md) before enrolling.
+
+        Do not include secrets, private code, personal information, or undisclosed vulnerability details.
+
   - type: input
     id: repository
     attributes:
@@ -15,6 +24,7 @@ body:
       placeholder: https://github.com/owner/repository
     validations:
       required: true
+
   - type: dropdown
     id: role
     attributes:
@@ -24,41 +34,60 @@ body:
         - Contributor authorized by a maintainer
     validations:
       required: true
-  - type: checkboxes
-    id: fit
-    attributes:
-      label: Beta fit
-      options:
-        - label: The repository is public and primarily uses Python.
-          required: true
-        - label: I am allowed to install or propose the GitHub App and setup workflow.
-          required: true
-        - label: I understand this is experimental software and maintainers retain every merge decision.
-          required: true
-        - label: I understand there is no card, sales call, support SLA, or automatic paid conversion.
-          required: true
+
   - type: textarea
-    id: context
+    id: review_context
     attributes:
-      label: Review context
-      description: What kinds of pull requests or risks would make Guard useful here?
-      placeholder: Authentication and dependency changes are reviewed frequently...
+      label: Normal review context
+      description: Describe the usual PR volume, reviewers, required CI, and decisions that Guard must not replace.
+      placeholder: Two maintainers review 5–10 Python PRs per month; CI and security checks remain authoritative...
     validations:
       required: true
-  - type: textarea
-    id: results
+
+  - type: dropdown
+    id: dependency_pr_policy
     attributes:
-      label: Results log
-      description: After installation, add public PR links and label each result Useful, Noisy, or Missed something. Say whether it changed a review decision.
-      placeholder: |
-        owner/repo#123 — Useful — changed decision: yes — found a missing replay test
-        owner/repo#124 — Noisy — changed decision: no — blocker was already covered
-    validations:
-      required: false
-  - type: checkboxes
-    id: reporting
-    attributes:
-      label: Public evidence
+      label: Automated dependency-only PR policy
+      description: Freeze this choice before the first assignment.
       options:
-        - label: I agree that the repository URL and feedback posted here may be summarized as public beta evidence.
+        - Exclude automated dependency-only PRs
+        - Include automated dependency-only PRs as eligible
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: design_agreement
+    attributes:
+      label: Prospective trial agreement
+      options:
+        - label: I agree that every future eligible PR will enter the ledger in creation order, including control assignments, failures, missing feedback, and withdrawals.
+          required: true
+        - label: I agree to concealed randomized presentation and understand that normal CI and human review continue in every arm.
+          required: true
+        - label: I agree to record a pre-exposure baseline when the assigned arm requires it.
+          required: true
+        - label: I agree that a concealed probability sample of alert and no-alert PRs may receive blinded independent adjudication using public artifacts.
+          required: true
+        - label: I understand that subjective “Useful/Noisy” feedback is secondary; obligation-level labels and audited missed risks are the primary evidence.
+          required: true
+
+  - type: textarea
+    id: risk_scope
+    attributes:
+      label: Repository-specific risk and evidence scope
+      description: What kinds of changes, evidence, and review failures matter in this repository?
+      placeholder: Authentication behavior, migration compatibility, release recovery, focused regression tests...
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: public_evidence
+    attributes:
+      label: Public evidence and privacy
+      options:
+        - label: I agree that public PR URLs, treatment timing, de-identified labels, and maintainer-authored summaries may be included in the public trial record.
+          required: true
+        - label: I will not post secrets, private code, exploit details, personal data, or information unsuitable for a public issue.
+          required: true
+        - label: I understand that there is no card, sales call, support SLA, or automatic paid conversion.
           required: true
