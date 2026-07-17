@@ -13,34 +13,41 @@ on:
       - "experiments/autonomous-assurance-v1/**"
   workflow_dispatch:
 
+concurrency:
+  group: autonomous-assurance-v1-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 permissions:
   contents: read
 
 jobs:
   static-corpus:
     runs-on: ubuntu-latest
-    timeout-minutes: 35
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: "3.13"
-      - name: Clone BugsInPy outcome corpus
-        run: git clone --depth 1 https://github.com/soarsmu/BugsInPy.git /tmp/BugsInPy
+      - name: Clone frozen BugsInPy outcome corpus
+        run: |
+          git clone --depth 1 https://github.com/soarsmu/BugsInPy.git /tmp/BugsInPy
+          test "$(git -C /tmp/BugsInPy rev-parse HEAD)" = "11c5f1eea954a42132cfd06bf257766a7963e0fd"
       - name: Run laboratory unit tests
         run: python -m unittest discover -s experiments/autonomous-assurance-v1/tests -v
-      - name: Run final amended upstream-commit history analysis
+      - name: Finalize 500-case audit from immutable seed and five missing cases
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           mkdir -p results/static
-          python experiments/autonomous-assurance-v1/run_corrected_static.py /tmp/BugsInPy \
+          python experiments/autonomous-assurance-v1/finalize_seeded_static.py /tmp/BugsInPy \
             --json-output results/static/bugsinpy-static.json \
             --markdown-output results/static/bugsinpy-static.md \
-            --csv-output results/static/bugsinpy-cases.csv
+            --csv-output results/static/httpie-new-cases.csv
           cp experiments/autonomous-assurance-v1/PREREGISTRATION.md results/static/
           cp experiments/autonomous-assurance-v1/AMENDMENT-001.md results/static/
           cp experiments/autonomous-assurance-v1/AMENDMENT-002.md results/static/
+          cp experiments/autonomous-assurance-v1/seed-495-project-counts.json results/static/
           git -C /tmp/BugsInPy rev-parse HEAD > results/static/bugsinpy-commit.txt
       - uses: actions/upload-artifact@v4
         if: always()
