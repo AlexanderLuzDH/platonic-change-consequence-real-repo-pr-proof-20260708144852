@@ -164,4 +164,3 @@ def _expect(condition: bool, message: str, errors: list[str]) -> None:
 
 def _is_int(value: Any) -> bool:
     return isinstance(value, int) and not isinstance(value, bool)
-
