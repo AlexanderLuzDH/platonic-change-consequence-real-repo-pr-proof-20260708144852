@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Static, history-grounded evidence-state audit of the BugsInPy corpus."""
 from __future__ import annotations
-import argparse, csv, json, math, re, shlex
+import argparse, csv, json, math, random, re, shlex
 from collections import Counter
 from dataclasses import asdict, dataclass
 from pathlib import Path, PurePosixPath
@@ -92,9 +92,18 @@ def wilson(k:int,n:int,z:float=1.6448536269514722)->list[float]|None:
     p=k/n; d=1+z*z/n; c=(p+z*z/(2*n))/d; h=z*math.sqrt(p*(1-p)/n+z*z/(4*n*n))/d
     return [max(0,c-h),min(1,c+h)]
 
+def cluster90(rs:list[Record],field:str,seed:int=61065,reps:int=5000)->list[float]|None:
+    projects=sorted({r.project for r in rs})
+    if not projects:return None
+    groups={p:[r for r in rs if r.project==p] for p in projects}; rng=random.Random(seed); vals=[]
+    for _ in range(reps):
+        sample=[r for _p in (rng.choice(projects) for _ in projects) for r in groups[_p]]
+        vals.append(sum(bool(getattr(r,field)) for r in sample)/len(sample))
+    vals.sort(); return [vals[int(.05*(reps-1))],vals[int(.95*(reps-1))]]
+
 def rate(rs:list[Record],field:str)->dict:
     k=sum(bool(getattr(r,field)) for r in rs); n=len(rs)
-    return {"successes":k,"total":n,"rate":k/n if n else None,"wilson90":wilson(k,n)}
+    return {"successes":k,"total":n,"rate":k/n if n else None,"wilson90":wilson(k,n),"project_cluster_bootstrap90":cluster90(rs,field)}
 
 def summarize(rs:list[Record])->dict:
     ev={x:rate(rs,x) for x in ["relevant_test_changed","benchmark_test_preexisting_proxy","any_test_changed","unrelated_test_change_only"]}
