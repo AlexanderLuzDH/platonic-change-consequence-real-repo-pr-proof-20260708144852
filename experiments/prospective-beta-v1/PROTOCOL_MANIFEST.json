@@ -28,11 +28,31 @@
     },
     {
       "path": "experiments/prospective-beta-v1/trial-record.schema.json",
-      "sha256": "53113dbd506f960059ad8f55c782401fca4f8e3072e177c3bf684c387327ee80"
+      "sha256": "6899afb5bf3644bce3ba17f0ab9958916678ea40915073318d06d3e041b45b87"
     },
     {
       "path": "experiments/prospective-beta-v1/trial_tools.py",
-      "sha256": "cd7e5d5b42ce906e875c36ebdbd4c1a30665ece341119fc67fb37952bff5a9f0"
+      "sha256": "96745617de659a5f93345a4ba223d71ba54c779ac2056c74914ad29cb51dc443"
+    },
+    {
+      "path": "experiments/prospective-beta-v1/_trial_core.py",
+      "sha256": "e7143dcdef8f3aa84f4bbf2b327403200f84a2da3696fc2dc79009d9a8a62f1c"
+    },
+    {
+      "path": "experiments/prospective-beta-v1/_trial_validate_base.py",
+      "sha256": "ff029b2984524cc8d3f4d56143edcc6c05ef5fc1366430e750fb86c6effe68b1"
+    },
+    {
+      "path": "experiments/prospective-beta-v1/_trial_validate_relations.py",
+      "sha256": "8cfdadeca26b4c5e7c7005023c846090ed73873c72dc0cae99a3b1bcffea64b8"
+    },
+    {
+      "path": "experiments/prospective-beta-v1/_trial_record.py",
+      "sha256": "8d1cedd14df293807212a6159d263866fcfa99f7cb66c0def09917e1c4184e9f"
+    },
+    {
+      "path": "experiments/prospective-beta-v1/_trial_analysis.py",
+      "sha256": "6ace1bce0d3a0f0424ba3dca23f1e48fe28978e9f61fb211df6d5f4e54a4ef77"
     },
     {
       "path": "experiments/prospective-beta-v1/randomize.py",
