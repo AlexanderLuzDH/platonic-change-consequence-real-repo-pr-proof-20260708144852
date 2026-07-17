@@ -112,3 +112,30 @@ jobs:
           retention-days: 90
           if-no-files-found: error
           path: results/executable-transfer
+
+  dynamic-mapping-primary:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.8"
+      - name: Install pinned historical PySnooper dependencies
+        run: python -m pip install --disable-pip-version-check future==0.18.3 six==1.16.0 decorator==4.4.2
+      - name: Run preregistered dynamic mapping pilot
+        run: |
+          mkdir -p results/dynamic-mapping
+          python experiments/autonomous-assurance-v1/run_dynamic_mapping_pilot.py \
+            --python python \
+            --json-output results/dynamic-mapping/dynamic-mapping.json \
+            --markdown-output results/dynamic-mapping/dynamic-mapping.md
+          cp experiments/autonomous-assurance-v1/DYNAMIC-MAPPING-PREREGISTRATION.md results/dynamic-mapping/
+          python --version > results/dynamic-mapping/python-version.txt
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: autonomous-assurance-v1-dynamic-mapping-python38
+          retention-days: 90
+          if-no-files-found: error
+          path: results/dynamic-mapping
