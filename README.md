@@ -42,10 +42,22 @@ The installed workflow is at [`.github/workflows/change-consequence-certificate.
 
 - [Open an install-free preview of this proof PR](https://guard.busleyden.com/?pr_url=https%3A%2F%2Fgithub.com%2FAlexanderLuzDH%2Fbusleyden-guard-live-proof%2Fpull%2F3#preview)
 - [Install free on public repositories](https://guard.busleyden.com/#pricing)
-- [Enroll in the public beta](https://github.com/AlexanderLuzDH/busleyden-guard-live-proof/issues/new?template=beta.yml)
+- [Enroll in the prospective public beta](https://github.com/AlexanderLuzDH/busleyden-guard-live-proof/issues/new?template=beta.yml)
 - [Read the security boundary](https://guard.busleyden.com/security-review.json)
 
-Public repositories are free. Paid checkout is closed while Guard is evaluated on independent repositories. The [public beta protocol](BETA.md) defines the evidence required before a paid launch; there is no card, sales call, or automatic conversion.
+Public repositories are free. Paid checkout is closed while Guard is evaluated on independent repositories. The [public beta protocol](BETA.md) and [preregistered experiment](experiments/prospective-beta-v1/PREREGISTRATION.md) define the evidence required before a paid launch; there is no card, sales call, or automatic conversion.
+
+## How the beta learns
+
+The prospective beta randomizes future eligible PRs across delayed control, evidence-only, immediate-obligation, and baseline-then-Guard presentation. A concealed probability sample includes both alerts and no-alert PRs for blinded adjudication. This separates:
+
+- genuinely new actionable evidence;
+- correct evidence the reviewer already had;
+- incorrect or unclear obligations;
+- risks Guard missed;
+- corrections and regressions in real review decisions.
+
+The executable assignment, audit, validation, and analysis tools live in [`experiments/prospective-beta-v1`](experiments/prospective-beta-v1).
 
 ## Run it as a GitHub Action
 
